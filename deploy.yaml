@@ -23,7 +23,7 @@ metadata:
   labels:
     app: opa
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: opa
@@ -45,6 +45,12 @@ spec:
         - --ignore=.*
         - --log-format=json
         - --set=decision_logs.console=true
+        - --tls-cert-file
+        - server.crt
+        - --tls-private-key-file
+        - server.key
+        - --authentication=token
+        - --authorization=basic
         - /permission-rego
         - /permission-data
         - /opa-auth
@@ -55,6 +61,12 @@ spec:
           name: permission-data
         - mountPath: /opa-auth
           name: opa-auth
+        - mountPath: server.key
+          name: opa-server-key
+          subPath: server.key
+        - mountPath: server.crt
+          name: opa-server-crt
+          subPath: server.crt
       volumes:
       - name: permission-rego
         configMap:
@@ -65,3 +77,9 @@ spec:
       - name: opa-auth
         configMap:
           name: opa-auth
+      - name: opa-server-key
+        configMap:
+          name: opa-server-key
+      - name: opa-server-crt
+        configMap:
+          name: opa-server-crt

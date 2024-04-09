@@ -3,3 +3,8 @@ bundle
 cmd.txt
 opa.exe
 input.1.json
+
+server.crt
+server.csr
+server.key
+server.key.org

@@ -7,7 +7,37 @@
 Please refer to https://minikube.sigs.k8s.io/docs/start/
 
 
-### Create config map 
+### Create ssl certificate
+
+Run these one by one to create ssl certificate
+```shell
+openssl genrsa -des3 -out server.key 2048
+```
+```shell
+openssl req -new -key server.key -out server.csr
+```
+```shell
+cp server.key server.key.org
+```
+```shell
+openssl rsa -in server.key.org -out server.key
+```
+```shell
+openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+```
+
+---
+
+### Set ssl certificate and other data to configmap
+We only need server.crt and server.key to configmap
+```shell
+kubectl create configmap opa-server-crt --from-file ./server.crt
+```
+```shell
+kubectl create configmap opa-server-key --from-file ./server.key
+```
+
+Adding other file required to configmap
 ```shell
 kubectl create configmap permission-rego --from-file ./permission.rego
 ```
