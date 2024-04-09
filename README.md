@@ -20,4 +20,6 @@ kubectl create configmap opa-auth --from-file ./opa-auth.rego
 kubectl apply -f ./deploy.yaml
 ```
 
-This opa service should not be exposed and can be accessed from other opa implementation service. For opa implementation on python see https://github.com/mhseptiadi/opa-py
+This opa service should be deployed on the same kube with opa implementation service. Then opa implementation service will be able to access the opa service internally. 
+
+For opa implementation on python see https://github.com/mhseptiadi/opa-py
