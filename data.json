@@ -1,4 +1,8 @@
 {
+    "app_list": [
+        "opa-py",
+        "other-app"
+    ],
     "role_permissions": {
         "admin": {
             "other": [

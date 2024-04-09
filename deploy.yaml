@@ -47,11 +47,14 @@ spec:
         - --set=decision_logs.console=true
         - /permission-rego
         - /permission-data
+        - /opa-auth
         volumeMounts:
         - mountPath: /permission-rego
           name: permission-rego
         - mountPath: /permission-data
           name: permission-data
+        - mountPath: /opa-auth
+          name: opa-auth
       volumes:
       - name: permission-rego
         configMap:
@@ -59,3 +62,6 @@ spec:
       - name: permission-data
         configMap:
           name: permission-data
+      - name: opa-auth
+        configMap:
+          name: opa-auth
