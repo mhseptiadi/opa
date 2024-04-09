@@ -1,0 +1,61 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: opa
+  labels:
+    app: opa
+spec:
+  type: NodePort
+  selector:
+    app: opa
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8181
+      targetPort: 8181
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opa
+  labels:
+    app: opa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opa
+  template:
+    metadata:
+      labels:
+        app: opa
+      name: opa
+    spec:
+      containers:
+      - name: opa
+        image: openpolicyagent/opa
+        ports:
+        - name: http
+          containerPort: 8181
+        args:
+        - "run"
+        - --server
+        - --ignore=.*
+        - --log-format=json
+        - --set=decision_logs.console=true
+        - /permission-rego
+        - /permission-data
+        volumeMounts:
+        - mountPath: /permission-rego
+          name: permission-rego
+        - mountPath: /permission-data
+          name: permission-data
+      volumes:
+      - name: permission-rego
+        configMap:
+          name: permission-rego
+      - name: permission-data
+        configMap:
+          name: permission-data

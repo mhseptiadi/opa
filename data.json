@@ -1,0 +1,21 @@
+{
+    "role_permissions": {
+        "admin": {
+            "other": [
+            ],
+            "user": [
+                "create",
+                "read",
+                "update",
+                "delete"
+            ]
+        },
+        "user": {
+            "other": [
+            ],
+            "user": [
+                "read"
+            ]
+        }
+    }
+}
