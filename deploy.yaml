@@ -40,7 +40,7 @@ spec:
         - name: http
           containerPort: 8181
         args:
-        - "run"
+        - run
         - --server
         - --ignore=.*
         - --log-format=json
